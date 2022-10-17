@@ -1,8 +1,9 @@
 package com.example.SimpleFactoryTesting;
 
+
 import com.example.SimpleFactory.IFruit.Fruit;
-import com.example.SimpleFactory.V2.GoldenApple;
 import com.example.SimpleFactory.V2.FruitFactory;
+import com.example.SimpleFactory.V2.GoldenApple;
 import com.example.SimpleFactory.V2.Peach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class SimpleFactoryTest {
                     "Orange"
             };
             // request fruit classes from FruitFactory
-            fruits = FruitFactory.get(requests);
+            fruits = FruitFactory.factoryMethod(requests);
             // grow each fruit or skip on null
             for (Fruit<?> value : fruits)
             {

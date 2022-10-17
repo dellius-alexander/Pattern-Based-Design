@@ -1,8 +1,14 @@
 package com.example.SimpleFactory.V1;
 
 import com.example.SimpleFactory.IFruit.Fruit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Peach implements Fruit<Object> {
+    private static final Logger log = LoggerFactory.getLogger(Peach.class);
+
+    static final long serialVersionUID = -20L;
+
     private String taste;
 
     /**
@@ -10,7 +16,7 @@ public class Peach implements Fruit<Object> {
      */
     @Override
     public void grow(){
-        System.out.println("Peach is growing...");
+        log.info("\nPeach is growing...");
     }
     /**
      * Get the fruit data.

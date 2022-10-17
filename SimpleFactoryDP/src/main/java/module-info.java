@@ -9,5 +9,8 @@
  */
 module SimpleFactory {
     requires lombok;
+    requires org.slf4j;
+    exports com.example.SimpleFactory.V2;
     exports com.example.SimpleFactory;
+    exports com.example.SimpleFactory.IFruit;
 }

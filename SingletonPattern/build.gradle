@@ -12,11 +12,19 @@ compileJava {
 }
 
 dependencies {
-    // lombok annotations is for boilerplate code generation
-    implementation 'org.projectlombok:lombok:1.18.24'
+    // Logging dependencies
+    compileOnlyApi 'org.slf4j:slf4j-api:2.0.3'
+    runtimeClasspath 'ch.qos.logback:logback-classic:1.4.4'
+    // test dependencies
     compileOnlyApi 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    // lombok annotations  dependencies is for boilerplate code generation
+    implementation 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 // run tests
 test {
@@ -48,14 +56,14 @@ jar {
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
     //noinspection GroovyAssignabilityCheck
     manifest {
-        attributes  'Main-Class': 'com.example.SingletonPattern.V1.Client',
+        attributes  'Main-Class': 'com.example.SingletonPattern.Lazy.Client',
                     'Class-Path': configurations.runtimeClasspath.files.collect { it.name }.join(' ')
     }
 }
 // run the app and pass CLi arguments: method 1
 task runApp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass.set('com.example.SingletonPattern.V1.Client')
+    mainClass.set('com.example.SingletonPattern.Lazy.Client')
     // arguments to pass to the application
     args 'Mango', 'Peach', 'Fuji Apple'
 

@@ -1,10 +1,14 @@
 package com.example.SimpleFactory.IFruit;
 
+import java.io.Serializable;
+
 /**
  * Base Case Fruit implementation.
  * @param <Data> fruit data of type Object
  */
-public interface Fruit<Data> {
+public interface Fruit<Data> extends Serializable {
+    long serialVersionUID = -1L;
+
     /**
      * Grows your fruit
      */

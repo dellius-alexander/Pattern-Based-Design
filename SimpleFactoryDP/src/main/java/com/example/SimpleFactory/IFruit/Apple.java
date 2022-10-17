@@ -5,6 +5,9 @@ package com.example.SimpleFactory.IFruit;
  * @param <Data> fruit data of type Object
  */
 public interface Apple<Data> extends Fruit<Data> {
+    long serialVersionUID = -2L;
+
+
     /**
      * The type of apple. <br>
      * Such as: <br>

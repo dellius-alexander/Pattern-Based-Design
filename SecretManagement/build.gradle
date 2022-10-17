@@ -3,8 +3,8 @@ plugins {
     id 'application'
 }
 
-group = 'org.example'
-version = findProperty('version')
+group 'org.example'
+version '0.1.1'
 
 compileJava {
     options.compilerArgs.addAll(['-Xlint'])
@@ -26,10 +26,16 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
-// run tests
+
 test {
     useJUnitPlatform()
 }
+
+
+javadoc {
+    source = sourceSets.main.java
+}
+
 // Project and System properties
 task propertyTypes(){
     doLast{
@@ -50,35 +56,3 @@ task propertyTypes(){
         }
     }
 }
-// Using and creating an Executable Jar
-jar {
-    // Exclude file from jar:
-    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
-    //noinspection GroovyAssignabilityCheck
-    manifest {
-        attributes  'Main-Class': 'com.example.BuilderPattern.Lazy.Client',
-                    'Class-Path': configurations.runtimeClasspath.files.collect { it.name }.join(' ')
-    }
-}
-// run the app and pass CLi arguments: method 1
-task runApp(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass.set('com.example.BuilderPattern.Lazy.Client')
-    // arguments to pass to the application
-    args 'Mango', 'Peach', 'Fuji Apple'
-
-}
-// run the app and pass CLi arguments: method 2
-task runExecutableJar(type: JavaExec) {
-    // Executable jars can have only _one_ jar on the classpath.
-    classpath = files(tasks.jar)
-    //    // 'main' does not need to be specified
-
-    // arguments to pass to the application
-    args 'Golden Apple', 'Peach', 'Mango'
-}
-
-runExecutableJar.dependsOn jar
-propertyTypes.dependsOn runExecutableJar
-runApp.dependsOn jar
-propertyTypes.dependsOn runApp

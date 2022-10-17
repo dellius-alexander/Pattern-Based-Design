@@ -1,8 +1,14 @@
 package com.example.SimpleFactory.V1;
 
 import com.example.SimpleFactory.IFruit.Fruit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Apple implements Fruit<Object> {
+    private static final Logger log = LoggerFactory.getLogger(Apple.class);
+
+    static final long serialVersionUID = -16L;
+
     private int treeAge;
     private String taste;
 
@@ -11,9 +17,8 @@ public class Apple implements Fruit<Object> {
      */
     @Override
     public void grow() {
-        System.out.println("Apple is growing...");
+        log.info("\nApple is growing...");
     }
-
 
     /**
      * Get the fruit data.

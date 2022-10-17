@@ -12,16 +12,31 @@ compileJava {
 }
 
 dependencies {
-    // lombok annotations is for boilerplate code generation
-    implementation 'org.projectlombok:lombok:1.18.24'
+
+    // Logging dependencies
+    compileOnlyApi 'org.slf4j:slf4j-api:2.0.3'
+    runtimeClasspath 'ch.qos.logback:logback-classic:1.4.4'
+    // test dependencies
     compileOnlyApi 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    // lombok annotations  dependencies is for boilerplate code generation
+    implementation 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 // run tests
 test {
     useJUnitPlatform()
 }
+
+javadoc {
+    source = sourceSets.main.java
+}
+
+
 // Project and System properties
 task propertyTypes(){
     doLast{
@@ -70,7 +85,7 @@ task runExecutableJar(type: JavaExec) {
     args 'Golden Apple', 'Peach', 'Mango'
 }
 
-runExecutableJar.dependsOn jar
-propertyTypes.dependsOn runExecutableJar
-runApp.dependsOn jar
-propertyTypes.dependsOn runApp
+//runExecutableJar.dependsOn jar
+//propertyTypes.dependsOn runExecutableJar
+//runApp.dependsOn jar
+//propertyTypes.dependsOn runApp
