@@ -16,16 +16,32 @@
 
 ### Base Implementation: 
 
-- Interface Apple implements interface Fruit
+- Interface `Fruit<Metadata>` contains inner class that holds metadata about the Fruit instance
+  - `Data<Metadata>` inner class holds information about the fruit implementation instance
+  - `Type` enumeration places each fruit into one of four fruit types
+  - when a fruit class is created metadata will be added specific to the fruit type
+  - `Apple<Metadata>` extends `Fruit<Metadata>` and add additional functionality specific to apples
 
-[![UML Diagram](./images/SimpleFactory.IFruit.png)](./images/SimpleFactory.IFruit.png  "./images/SimpleFactory.IFruit.png")
+[![UML Diagram](./images/SimpleFactory.IFruit.01.png)](./images/SimpleFactory.IFruit.01.png  "./images/SimpleFactory.IFruit.01.png")
 
 ### Interface Fruit and Apple Implementation:
 
-- Classes Golden and Fuji Apple implement Apple
-- Class Peach implement Fruit
+- Classes `Golden Apple` and `Fuji Apple` implement `Apple<Metadata>`
+- Class `Peach` implement `Fruit<Metadata>`
+- Class `Clent` may only request a fruit from the `FruitFactory` and use `Fruit<Metadata>` interface to access data about the fruit
 
-[![UML Diagram](./images/SimpleFactory.png)](./images/SimpleFactory.png  "./images/SimpleFactory.png")
+[![UML Diagram](./images/SimpleFactory.V2.05.png)](./images/SimpleFactory.V2.05.png  "./images/SimpleFactory.V2.05.png")
+
+
+### Sequence Diagram
+
+In the sequence diagram we map the communication between our `Client` and our `FruitFactory`. 
+The `FruitFactory` class takes on the role of a boundary or single point of contact to the `Fruit` classes.
+This also reduces the attack surface of entrypoint to the fruit classes. You may request 
+a list of fruit or a single fruit. If the fruit is not available the `factoryMethod()` returns `null`.
+
+[![Sequence Diagram](./images/SimpleFactorySequenceDiagram.png)](./images/SimpleFactorySequenceDiagram.png)
+
 
 
 ### Advantages:

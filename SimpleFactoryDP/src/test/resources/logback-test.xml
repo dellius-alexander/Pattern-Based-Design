@@ -28,9 +28,9 @@ ERROR 	YES 	  YES 	  YES 	YES 	YES 	  NO
             name="FIX_WINDOW_BASED_FILE"
             class="ch.qos.logback.core.rolling.RollingFileAppender"
     >
-        <file>${LOG_DIR}/simpleFactoryDP_${dateTimeFormat}.log</file>
+        <file>${LOG_DIR}/qaSimpleFactoryDP_${dateTimeFormat}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/simpleFactoryDP_${dateTimeFormat}_%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/qaSimpleFactoryDP_${dateTimeFormat}_%i.log</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>5</maxIndex>
         </rollingPolicy>
@@ -50,7 +50,7 @@ ERROR 	YES 	  YES 	  YES 	YES 	YES 	  NO
 <!--     <appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
 <!--    &lt;!&ndash; use the previously created timestamp to create a uniquely-->
 <!--         named log file &ndash;&gt;-->
-<!--    <file>${LOG_DIR}/simpleFactoryDP_${dateTimeFormat}.log</file>-->
+<!--    <file>${LOG_DIR}/qaSimpleFactoryDP_${dateTimeFormat}.log</file>-->
 <!--    <encoder>-->
 <!--      <pattern>%d{HH:mm:ss.SSS} [%t] [%-5level] [%logger{10}.%M][%L] |- %msg%n</pattern>-->
 <!--    </encoder>-->

@@ -10,6 +10,7 @@
 module SimpleFactory {
     requires lombok;
     requires org.slf4j;
+    requires com.google.gson;
     exports com.example.SimpleFactory.V2;
     exports com.example.SimpleFactory;
     exports com.example.SimpleFactory.IFruit;

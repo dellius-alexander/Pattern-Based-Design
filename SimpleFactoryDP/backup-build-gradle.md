@@ -51,14 +51,14 @@ jar {
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
     //noinspection GroovyAssignabilityCheck
     manifest {
-        attributes  'Main-Class': 'com.example.SimpleFactory.V2.Client',
+        attributes  'Main-Class': 'com.example.SimpleFactory.Client',
                 'Class-Path': configurations.runtimeClasspath.files.collect { it.name }.join(' ')
     }
 }
 // run the app and pass CLi arguments: method 1
 task runApp(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass.set('com.example.SimpleFactory.V2.Client')
+    mainClass.set('com.example.SimpleFactory.Client')
     // arguments to pass to the application
     args 'Mango', 'Peach', 'Fuji Apple'
 

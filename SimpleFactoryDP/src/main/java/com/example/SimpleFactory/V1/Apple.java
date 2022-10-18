@@ -24,10 +24,7 @@ public class Apple implements Fruit<Object> {
      * Get the fruit data.
      * @return the fruit data
      */
-    @Override
-    public String getData() {
-        return "\nData{\n" +
-                "\t\"Fruit_Name\":\"Apple\"" +
-                "\n}\n";
+    public Fruit.Data<Object> getData() {
+        return new Fruit.Data<>("Apple", "3.99", Type.SIMPLE);
     }
 }

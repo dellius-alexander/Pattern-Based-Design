@@ -2,9 +2,9 @@ package com.example.SimpleFactory.IFruit;
 
 /**
  * Base Case Apple Implementation
- * @param <Data> fruit data of type Object
+ * @param <Metadata> data about the fruit
  */
-public interface Apple<Data> extends Fruit<Data> {
+public interface Apple<Metadata> extends Fruit<Metadata> {
     long serialVersionUID = -2L;
 
 

@@ -5,7 +5,6 @@ import com.example.SimpleFactory.FruitException;
 import com.example.SimpleFactory.IFruit.Fruit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 public class FruitFactory implements Serializable {
     private static final Logger log = LoggerFactory.getLogger(FruitFactory.class);
     static final long serialVersionUID = -8L;
+    private FruitFactory(){}
     static GoldenApple createGoldenApple(){return new GoldenApple();}
     static FujiApple createFujiApple(){return new FujiApple();}
     static Peach createPeach(){return new Peach();}
@@ -48,7 +48,7 @@ public class FruitFactory implements Serializable {
      * @param requests the requested list of fruits.
      * @return an array of fruit classes matching the requested fruits.
      */
-    public static List<Fruit<?>> factoryMethod(String[] requests)
+    public List<Fruit<?>> factoryMethod(String[] requests)
     {
         List<Fruit<?>> fruitList = new ArrayList<>();
         List<String> fruitRequests = Arrays.stream(requests).collect(Collectors.toList());
@@ -69,7 +69,6 @@ public class FruitFactory implements Serializable {
             log.error("\n{}\n",e.getLocalizedMessage());
             e.printStackTrace();
             // pass the remaining requests back to [ get(requests): Fruits<?> ]
-            assert !fruitRequests.isEmpty();
             return  factoryMethod((String[]) fruitRequests.toArray());
         }
         return fruitList;

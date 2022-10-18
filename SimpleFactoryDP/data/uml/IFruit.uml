@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.example.SimpleFactory.IFruit</OriginalElement>
+  <nodes>
+    <node x="560.1236494823639" y="-75.94691224268684">com.example.SimpleFactory.IFruit.Fruit.Type</node>
+    <node x="253.89682539682536" y="337.0">com.example.SimpleFactory.IFruit.Apple</node>
+    <node x="-80.5" y="196.46803900325028">com.example.SimpleFactory.V2.Peach</node>
+    <node x="-512.5218275464755" y="47.22210184182015">com.example.SimpleFactory.Client</node>
+    <node x="111.30140303143622" y="-89.94691224268684">com.example.SimpleFactory.IFruit.Fruit.Data</node>
+    <node x="276.89682539682536" y="669.0">com.example.SimpleFactory.V2.GoldenApple</node>
+    <node x="184.56349206349205" y="141.57096424702058">com.example.SimpleFactory.IFruit.Fruit</node>
+    <node x="-570.1699857263237" y="428.7139761646804">com.example.SimpleFactory.V2.FruitFactory</node>
+    <node x="276.89682539682536" y="477.0">com.example.SimpleFactory.V2.FujiApple</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.example.SimpleFactory.Client" target="com.example.SimpleFactory.V2.FruitFactory" relationship="DEPENDENCY">
+      <point x="-16.648172453524523" y="43.5" />
+      <point x="-30.0000142736763" y="-43.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit" target="com.example.SimpleFactory.IFruit.Fruit.Data" relationship="DEPENDENCY">
+      <point x="-28.76249206349206" y="-43.5" />
+      <point x="-15.000403031436235" y="70.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit.Data" target="com.example.SimpleFactory.IFruit.Fruit" relationship="DEPENDENCY">
+      <point x="-4.030314362353238E-4" y="69.99991224268683" />
+      <point x="279.301" y="111.0" />
+      <point x="293.063" y="111.0" />
+      <point x="-4.920634920608791E-4" y="-43.499964247020586" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FujiApple" target="com.example.SimpleFactory.IFruit.Fruit" relationship="DEPENDENCY">
+      <point x="-99.5" y="0.0" />
+      <point x="236.39682539682536" y="560.0" />
+      <point x="-56.666666666666686" y="43.5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Apple" target="com.example.SimpleFactory.IFruit.Fruit" relationship="INTERFACE_GENERALIZATION">
+      <point x="-71.83333333333331" y="-30.0" />
+      <point x="0.0" y="43.5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FruitFactory" target="com.example.SimpleFactory.V2.Peach" relationship="CREATE">
+      <point x="0.0" y="-43.0" />
+      <point x="-403.1699857263237" y="266.4680390032503" />
+      <point x="-99.5" y="0.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FujiApple" target="com.example.SimpleFactory.IFruit.Apple" relationship="REALIZATION">
+      <point x="-11.5" y="-83.0" />
+      <point x="0.0" y="30.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit.Data" target="com.example.SimpleFactory.IFruit.Fruit.Type" relationship="TO_ONE">
+      <point x="168.0" y="0.0" />
+      <point x="-120.5" y="0.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.Peach" target="com.example.SimpleFactory.IFruit.Fruit" relationship="REALIZATION">
+      <point x="99.5" y="-62.5" />
+      <point x="-108.5" y="18.8970747562297" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit.Data" target="com.example.SimpleFactory.IFruit.Fruit.Type" relationship="DEPENDENCY">
+      <point x="14.999596968563765" y="69.99991224268683" />
+      <point x="294.301" y="79.0" />
+      <point x="680.624" y="79.0" />
+      <point x="3.5051763609317277E-4" y="55.99991224268683" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.Peach" target="com.example.SimpleFactory.IFruit.Fruit.Data" relationship="CREATE">
+      <point x="0.0" y="-70.0" />
+      <point x="19.0" y="-19.946912242686835" />
+      <point x="-168.0" y="0.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FujiApple" target="com.example.SimpleFactory.IFruit.Fruit.Data" relationship="CREATE">
+      <point x="99.5" y="0.0" />
+      <point x="818.6236494823639" y="560.0" />
+      <point x="818.6236494823639" y="-107.44691224268684" />
+      <point x="279.3014030314362" y="-107.44691224268684" />
+      <point x="0.0" y="-70.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FruitFactory" target="com.example.SimpleFactory.V2.GoldenApple" relationship="CREATE">
+      <point x="0.0" y="43.0" />
+      <point x="-403.1699857263237" y="752.0" />
+      <point x="-99.5" y="0.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FruitFactory" target="com.example.SimpleFactory.IFruit.Fruit" relationship="DEPENDENCY">
+      <point x="167.0" y="-12.213976164680389" />
+      <point x="206.39682539682536" y="459.5" />
+      <point x="-86.66666666666669" y="43.5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.Client" target="com.example.SimpleFactory.IFruit.Fruit" relationship="DEPENDENCY">
+      <point x="-1.6481724535245235" y="43.5" />
+      <point x="-418.17" y="178.96803900325028" />
+      <point x="-108.5" y="-6.102925243770301" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.GoldenApple" target="com.example.SimpleFactory.IFruit.Fruit" relationship="DEPENDENCY">
+      <point x="-99.5" y="-15.0" />
+      <point x="221.39682539682536" y="737.0" />
+      <point x="-71.66666666666669" y="43.5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit.Type" target="com.example.SimpleFactory.IFruit.Fruit" relationship="INNER_CLASS">
+      <point x="-120.4996494823639" y="-15.000087757313167" />
+      <point x="504.0" y="-34.947" />
+      <point x="504.0" y="185.071" />
+      <point x="108.49950793650794" y="3.5752979414382935E-5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit" target="com.example.SimpleFactory.IFruit.Fruit.Type" relationship="DEPENDENCY">
+      <point x="108.5" y="15.000035752979414" />
+      <point x="695.624" y="200.071" />
+      <point x="15.000350517636093" y="56.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.IFruit.Fruit.Data" target="com.example.SimpleFactory.IFruit.Fruit" relationship="INNER_CLASS">
+      <point x="167.99959696856376" y="-15.000087757313167" />
+      <point x="504.0" y="-34.947" />
+      <point x="504.0" y="185.071" />
+      <point x="108.49950793650794" y="3.5752979414382935E-5" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.GoldenApple" target="com.example.SimpleFactory.IFruit.Fruit.Data" relationship="CREATE">
+      <point x="-99.5" y="15.0" />
+      <point x="-587.6699857263237" y="767.0" />
+      <point x="-587.6699857263237" y="-34.946912242686835" />
+      <point x="-168.0" y="-15.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.GoldenApple" target="com.example.SimpleFactory.IFruit.Apple" relationship="REALIZATION">
+      <point x="-99.5" y="-30.0" />
+      <point x="259.39682539682536" y="722.0" />
+      <point x="-105.5" y="30.0" />
+    </edge>
+    <edge source="com.example.SimpleFactory.V2.FruitFactory" target="com.example.SimpleFactory.V2.FujiApple" relationship="CREATE">
+      <point x="15.0" y="43.0" />
+      <point x="-388.1699857263237" y="575.0" />
+      <point x="-99.5" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.9584631360332295" showDependencies="true" x="115.5" y="363.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

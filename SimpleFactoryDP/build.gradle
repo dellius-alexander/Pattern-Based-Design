@@ -12,10 +12,10 @@ compileJava {
 }
 
 dependencies {
-
+    implementation 'com.google.code.gson:gson:2.9.1'
     // Logging dependencies
-    compileOnlyApi 'org.slf4j:slf4j-api:2.0.3'
-    runtimeClasspath 'ch.qos.logback:logback-classic:1.4.4'
+    compileClasspath 'org.slf4j:slf4j-api:2.0.3'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.4.4'
     // test dependencies
     compileOnlyApi 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'

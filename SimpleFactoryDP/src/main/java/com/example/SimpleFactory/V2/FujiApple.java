@@ -1,15 +1,15 @@
 package com.example.SimpleFactory.V2;
 
 import com.example.SimpleFactory.IFruit.Apple;
-import lombok.Data;
+import com.example.SimpleFactory.IFruit.Fruit;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Data
+@ToString
 public class FujiApple implements Apple<Object> {
     private static final Logger log = LoggerFactory.getLogger(FujiApple.class);
     static final long serialVersionUID = -9L;
-
     private int treeAge;
     private String taste;
 
@@ -27,7 +27,7 @@ public class FujiApple implements Apple<Object> {
      */
     @Override
     public void grow() {
-        log.info("\n{} is growing...\n", type());
+        log.info("\n{} is growing...", type());
     }
 
     /**
@@ -35,9 +35,8 @@ public class FujiApple implements Apple<Object> {
      * @return the fruit data
      */
     @Override
-    public String getData() {
-        return "\nData{\n" +
-                "\t\"Fruit_Name\":\"Fuji Apple\"" +
-                "\n}\n";
+    public Fruit.Data<Object> getData() {
+        return new Fruit.Data<>(type(), "6.99", Fruit.Type.SIMPLE);
+
     }
 }

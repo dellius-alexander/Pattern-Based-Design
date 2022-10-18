@@ -6,3 +6,4 @@ public class FruitException extends Exception {
     public String message() { return String.format("%s\n", super.getMessage()); }
 
 }
+

@@ -23,9 +23,7 @@ public class Peach implements Fruit<Object> {
      * @return the fruit data
      */
     @Override
-    public String getData() {
-        return "\nData{\n" +
-                "\t\"Fruit_Name\":\"Peach\"" +
-                "\n}\n";
+    public Fruit.Data<Object> getData() {
+        return new Fruit.Data<>("Peach", "1.99", Type.SIMPLE);
     }
 }
