@@ -11,10 +11,10 @@ public class Client {
         log.info("\nSingleton Pattern\n\n{}", singleton.toString());
         singleton = Singleton.getInstance();
         singleton.setData(8888);
-        log.info("\nFirst Reference: {}", singleton);
+        log.info("\nFirst Reference: {}, Class: {}", singleton, singleton.getClass().hashCode());
         singleton = Singleton.getInstance();
         singleton.setData(9999);
-        log.info("\nSecond Reference: {}", singleton);
+        log.info("\nSecond Reference: {}, Class: {}", singleton, singleton.getClass().hashCode());
 
     }
 }

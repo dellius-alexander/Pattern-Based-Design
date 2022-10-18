@@ -1,4 +1,4 @@
-package com.example.BuilderPattern.V1;
+package com.example.BuilderPattern.AutomobileAssembly;
 
 public class Client {
 

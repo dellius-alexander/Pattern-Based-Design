@@ -12,21 +12,20 @@
 - Also called Static Factory Method design pattern
 - The object can be created based on the parameter received without knowing the details of how to create
 
-
 ### UML Diagram
 
 ### Base Implementation: 
 
-- Interface IApple implements interface IFruit
+- Interface Apple implements interface Fruit
 
 [![UML Diagram](./images/SimpleFactory.IFruit.png)](./images/SimpleFactory.IFruit.png  "./images/SimpleFactory.IFruit.png")
 
-### Interface IFruit and IApple Implementation:
+### Interface Fruit and Apple Implementation:
 
-- Classes Golden and Fuji Apple implement IApple
-- Class Peach implement IFruit
+- Classes Golden and Fuji Apple implement Apple
+- Class Peach implement Fruit
 
-[![UML Diagram](./images/SimpleFactory.V2.png)](./images/SimpleFactory.V2.png  "./images/SimpleFactory.V2.png")
+[![UML Diagram](./images/SimpleFactory.png)](./images/SimpleFactory.png  "./images/SimpleFactory.png")
 
 
 ### Advantages:
