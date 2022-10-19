@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: com.example.SingletonPattern.Lazy.Client
-Class-Path: lombok-1.18.24.jar logback-classic-1.4.4.jar logback-core-1.
- 4.4.jar slf4j-api-2.0.1.jar
-
