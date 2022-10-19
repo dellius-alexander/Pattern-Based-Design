@@ -8,9 +8,10 @@ public class Apple implements Fruit<Object> {
     private static final Logger log = LoggerFactory.getLogger(Apple.class);
 
     static final long serialVersionUID = -16L;
-
-    private int treeAge;
-    private String taste;
+    private final Fruit.Data<Object> data;
+    private Apple(){
+        data = new Data<>("Apple", "3.99", Fruit.Type.SIMPLE);
+    }
 
     /**
      * Grows your fruit
@@ -25,6 +26,6 @@ public class Apple implements Fruit<Object> {
      * @return the fruit data
      */
     public Fruit.Data<Object> getData() {
-        return new Fruit.Data<>("Apple", "3.99", Type.SIMPLE);
+        return data;
     }
 }

@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 public class Peach implements Fruit<Object> {
     private static final Logger log = LoggerFactory.getLogger(Peach.class);
     static final long serialVersionUID = -13L;
-    private String taste;
+    private final Fruit.Data<Object> data;
+    public Peach(){
+        data = new Data<>("Peach", "2.99", Fruit.Type.SIMPLE);
+    }
     @Override
     public void grow(){
         log.info("\nPeach is growing...");
@@ -21,7 +24,6 @@ public class Peach implements Fruit<Object> {
      */
     @Override
     public Fruit.Data<Object> getData() {
-        return new Fruit.Data<>("Peach", "2.99", Fruit.Type.SIMPLE);
-
+        return data;
     }
 }

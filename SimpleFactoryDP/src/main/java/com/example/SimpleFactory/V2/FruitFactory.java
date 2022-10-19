@@ -38,38 +38,34 @@ public class FruitFactory implements Serializable {
                     request.toUpperCase()));
         } catch (FruitException e){
             log.error("\n{}\n",e.message());
-//            e.printStackTrace();
         }
         return null;
     }
-
     /**
      * Returns an array of fruit classes from the requested list of fruits.
      * @param requests the requested list of fruits.
      * @return an array of fruit classes matching the requested fruits.
      */
-    public List<Fruit<?>> factoryMethod(String[] requests)
+    public static List<Fruit<?>> factoryMethod(String[] requests)
     {
         List<Fruit<?>> fruitList = new ArrayList<>();
         List<String> fruitRequests = Arrays.stream(requests).collect(Collectors.toList());
         try {
-            for (String requested : fruitRequests )
+            for (String request : fruitRequests )
             {
                 // convert request to lower case
-                requested = requested.toLowerCase();
+                request = request.toLowerCase();
                 // get fruit class
-                Fruit<?> f = factoryMethod(requested);
+                Fruit<?> f = factoryMethod(request);
                 // remove request from queue
-                fruitRequests.remove(requested);
-                if (f == null) {continue;}
-                // add fruit to list
+                fruitRequests.remove(request);
+                if (f == null){continue;}
                 fruitList.add(f);
             }
         } catch (Exception e){
-            log.error("\n{}\n",e.getLocalizedMessage());
-            e.printStackTrace();
+            log.error("\n{}\n",e.getMessage());
             // pass the remaining requests back to [ get(requests): Fruits<?> ]
-            return  factoryMethod((String[]) fruitRequests.toArray());
+            return  factoryMethod(fruitRequests.toArray(String[]::new));
         }
         return fruitList;
     }

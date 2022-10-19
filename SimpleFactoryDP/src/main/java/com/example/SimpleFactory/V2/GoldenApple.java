@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 public class GoldenApple implements Apple<Object> {
     private static final Logger log = LoggerFactory.getLogger(GoldenApple.class);
     static final long serialVersionUID = -10L;
-    private int treeAge;
-    private String taste;
-
+    private final Fruit.Data<Object> data;
+    public GoldenApple(){
+        data = new Data<>(type(), "5.99", Fruit.Type.SIMPLE);
+    }
     /**
      * The type of apple: Golden Delicious. <br>
      * @return the type of apple
@@ -36,7 +37,6 @@ public class GoldenApple implements Apple<Object> {
      */
     @Override
     public Fruit.Data<Object> getData() {
-        return new Data<>(type(), "5.99", Fruit.Type.SIMPLE);
-
+        return data;
     }
 }

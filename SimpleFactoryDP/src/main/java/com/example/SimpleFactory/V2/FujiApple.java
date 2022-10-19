@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 public class FujiApple implements Apple<Object> {
     private static final Logger log = LoggerFactory.getLogger(FujiApple.class);
     static final long serialVersionUID = -9L;
-    private int treeAge;
-    private String taste;
+    private final Fruit.Data<Object> data;
+    public FujiApple(){
+        data = new Data<>(type(), "6.99", Fruit.Type.SIMPLE);
+    }
 
     /**
      * The type of apple: Fuji. <br>
@@ -36,7 +38,6 @@ public class FujiApple implements Apple<Object> {
      */
     @Override
     public Fruit.Data<Object> getData() {
-        return new Fruit.Data<>(type(), "6.99", Fruit.Type.SIMPLE);
-
+        return data;
     }
 }

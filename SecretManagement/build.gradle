@@ -13,8 +13,8 @@ compileJava {
 
 dependencies {
     // Logging dependencies
-    compileOnlyApi 'org.slf4j:slf4j-api:2.0.3'
-    runtimeClasspath 'ch.qos.logback:logback-classic:1.4.4'
+    implementation 'org.slf4j:slf4j-api:2.0.3'
+    implementation 'ch.qos.logback:logback-classic:1.4.4'
     // test dependencies
     compileOnlyApi 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
@@ -33,7 +33,7 @@ test {
 
 
 javadoc {
-    source = sourceSets.main.java
+    options.addBooleanOption('html5', true)
 }
 
 // Project and System properties

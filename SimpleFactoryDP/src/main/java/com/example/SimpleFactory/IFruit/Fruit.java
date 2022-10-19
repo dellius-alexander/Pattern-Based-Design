@@ -2,11 +2,12 @@ package com.example.SimpleFactory.IFruit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * Base Case Fruit implementation.
@@ -22,9 +23,9 @@ public interface Fruit<Metadata> extends Serializable {
      * @param <Metadata> the data object
      */
     class Data<Metadata> {
-        Metadata name;
-        Metadata price;
-        Fruit.Type type;
+        Metadata name = null;
+        Metadata price = null;
+        Fruit.Type type = null;
 
         /**
          * For adding metadata about the fruit..
@@ -75,6 +76,62 @@ public interface Fruit<Metadata> extends Serializable {
                     "\t\"type\":\"" + this.type + "\"" +
                     "\n}\n";
         }
+
+        public Metadata getName() {
+            return this.name;
+        }
+
+        public Metadata getPrice() {
+            return this.price;
+        }
+
+        public Type getType() {
+            return this.type;
+        }
+
+        public void setName(Metadata name) {
+            this.name = name;
+        }
+
+        public void setPrice(Metadata price) {
+            this.price = price;
+        }
+
+        public void setType(Type type) {
+            this.type = type;
+        }
+
+        public boolean equals(final Object o) {
+            if (o == this) return true;
+            if (!(o instanceof Fruit.Data)) return false;
+            final Data<?> other = (Data<?>) o;
+            if (!other.canEqual(this)) return false;
+            final Object this$name = this.getName();
+            final Object other$name = other.getName();
+            if (!Objects.equals(this$name, other$name)) return false;
+            final Object this$price = this.getPrice();
+            final Object other$price = other.getPrice();
+            if (!Objects.equals(this$price, other$price)) return false;
+            final Object this$type = this.getType();
+            final Object other$type = other.getType();
+            return Objects.equals(this$type, other$type);
+        }
+
+        protected boolean canEqual(final Object other) {
+            return other instanceof Fruit.Data;
+        }
+
+        public int hashCode() {
+            final int PRIME = 59;
+            int result = 1;
+            final Object $name = this.getName();
+            result = result * PRIME + ($name == null ? 43 : $name.hashCode());
+            final Object $price = this.getPrice();
+            result = result * PRIME + ($price == null ? 43 : $price.hashCode());
+            final Object $type = this.getType();
+            result = result * PRIME + ($type == null ? 43 : $type.hashCode());
+            return result;
+        }
     }
 
     /**
@@ -87,7 +144,7 @@ public interface Fruit<Metadata> extends Serializable {
         MULTIPLE("MULTIPLE"),
         ACCESSORY("ACCESSORY");
         private static final Logger log = LoggerFactory.getLogger(Type.class);
-        private final Type label;
+        private final String label;
         // static inference
         private static final Map<String, Type> BY_LABEL = new HashMap<>();
 
@@ -96,7 +153,7 @@ public interface Fruit<Metadata> extends Serializable {
          * @param label the type label
          */
         Type(String label) {
-            this.label = valueOfLabel(label);
+            this.label = label;
         }
 
         /*
@@ -104,7 +161,7 @@ public interface Fruit<Metadata> extends Serializable {
          */
         static {
             for (Type e : values()) {
-                BY_LABEL.put(String.valueOf(e.label), e);
+                BY_LABEL.put(e.label, e);
             }
             log.info(new ArrayList<>(BY_LABEL.values()).toString());
         }
@@ -116,8 +173,8 @@ public interface Fruit<Metadata> extends Serializable {
         public static Type valueOfLabel(String label) {
             Type r = null;
             for (Type role : values()) {
-                if (String.valueOf(role.label).equals(label)) {
-                    log.info(String.valueOf(role.label));
+                if (role.label.equals(label)) {
+                    log.info(role.label);
                     r = role;
                 }
             }
