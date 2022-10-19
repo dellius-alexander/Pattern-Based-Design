@@ -1,0 +1,24 @@
+23:13:01.110 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][15] |- 
+Singleton Pattern
+
+Singleton(data=8888) 
+23:13:01.115 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][17] |- 
+First Reference: Singleton(data=8888) 
+23:13:01.115 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][20] |- 
+Second Reference: Singleton(data=9999) 
+23:13:13.980 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][15] |- 
+Singleton Pattern
+
+Singleton(data=8888) 
+23:13:13.989 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][17] |- 
+First Reference: Singleton(data=8888) 
+23:13:13.990 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][20] |- 
+Second Reference: Singleton(data=8888) 
+23:13:49.758 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][15] |- 
+Singleton Pattern
+
+Singleton(data=null) 
+23:13:49.764 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][18] |- 
+First Reference: Singleton(data=8888) 
+23:13:49.764 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][20] |- 
+Second Reference: Singleton(data=8888) 

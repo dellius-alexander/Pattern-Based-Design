@@ -1,0 +1,8 @@
+01:10:05.099 [main] [[34mINFO [0;39m] [[36mc.e.S.E.Client.main[0;39m][11] |- 
+Singleton Pattern
+
+Singleton(data=null) 
+01:10:05.106 [main] [[34mINFO [0;39m] [[36mc.e.S.E.Client.main[0;39m][14] |- 
+First Reference: Singleton(data=8888) 
+01:10:05.107 [main] [[34mINFO [0;39m] [[36mc.e.S.E.Client.main[0;39m][17] |- 
+Second Reference: Singleton(data=9999) 

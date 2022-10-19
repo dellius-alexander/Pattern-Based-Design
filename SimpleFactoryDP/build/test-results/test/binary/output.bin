@@ -1,0 +1,16 @@
+Š17:55:23.953 [Test worker] [[34mINFO [0;39m] [[36mc.e.S.I.Fruit$Type.<clinit>[0;39m][99] |- [ACCESSORY, AGGREGATE, SIMPLE, MULTIPLE] 
+
+{
+	"name":"Peach"
+	"price":"2.99"
+	"type":"SIMPLE"
+}
+
+
+{
+	"name":"Golden Apple"
+	"price":"5.99"
+	"type":"SIMPLE"
+}
+
+

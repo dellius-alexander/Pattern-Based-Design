@@ -1,0 +1,8 @@
+23:03:07.481 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][14] |- 
+Singleton Pattern
+
+com.example.SingletonPattern.Lazy.Singleton@4470f8a6
+23:03:19.746 [main] [[34mINFO [0;39m] [[36mc.e.S.V.Client.main[0;39m][14] |- 
+Singleton Pattern
+
+Singleton(data=Hello World...) 
