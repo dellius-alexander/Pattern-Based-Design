@@ -33,11 +33,11 @@ public class Client {
             }
             else {
                 List<Fruit<?>> fruits = FruitFactory.factoryMethod(args);
-                fruits.forEach( fruit -> {
-                    fruit.grow();
-                    log.info("\n{}", fruit.getData());
-                        }
-
+                fruits.forEach( fruit ->
+                    {
+                        fruit.grow();
+                        log.info("\n{}", fruit.getData());
+                    }
                 );
 //                for (String arg : args)
 //                {

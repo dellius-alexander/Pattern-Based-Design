@@ -40,7 +40,22 @@ public interface Fruit<Metadata> extends Serializable {
         ){
             setData(name, price, type);
         }
-
+        public Metadata getName() {
+            return this.name;
+        }
+        public Metadata getPrice() {
+            return this.price;
+        }
+        public Type getType() {
+            return this.type;
+        }
+        public void setName(Metadata name) {
+            this.name = name;
+        }
+        public void setPrice(Metadata price) {
+            this.price = price;
+        }
+        public void setType(Type type) { this.type = type; }
         /**
          * Assign metadata to object
          * @param name the name of the fruit
@@ -52,17 +67,9 @@ public interface Fruit<Metadata> extends Serializable {
                 Metadata price,
                 Fruit.Type type
         ){
-            this.name = name;
-            this.price = price;
-            this.type = type;
-        }
-
-        /**
-         * Retrieve the data object.
-         * @return the metadata
-         */
-        public Data<Metadata> getData(){
-            return this;
+            setName(name);
+            setPrice(price);
+            setType(type);
         }
 
         /**
@@ -71,36 +78,11 @@ public interface Fruit<Metadata> extends Serializable {
          */
         public String toString(){
             return "{\n" +
-                    "\t\"name\":\"" + this.name + "\"\n" +
-                    "\t\"price\":\"" + this.price + "\"\n" +
-                    "\t\"type\":\"" + this.type + "\"" +
+                    "\t\"name\":\"" + getName() + "\"\n" +
+                    "\t\"price\":\"" + getPrice() + "\"\n" +
+                    "\t\"type\":\"" + getType() + "\"" +
                     "\n}\n";
         }
-
-        public Metadata getName() {
-            return this.name;
-        }
-
-        public Metadata getPrice() {
-            return this.price;
-        }
-
-        public Type getType() {
-            return this.type;
-        }
-
-        public void setName(Metadata name) {
-            this.name = name;
-        }
-
-        public void setPrice(Metadata price) {
-            this.price = price;
-        }
-
-        public void setType(Type type) {
-            this.type = type;
-        }
-
         public boolean equals(final Object o) {
             if (o == this) return true;
             if (!(o instanceof Fruit.Data)) return false;
