@@ -39,39 +39,23 @@ import java.util.stream.Collectors;
  * RSA/ECB/OAEPWithSHA-256AndMGF1Padding (1024, 2048) <br/>
  */
 
-public class Secret implements Serializable {
+public class Secret implements Serializable, Key {
     static final long serialVersionUID = -64L;
     private static final Logger log = LoggerFactory.getLogger(Secret.class);
-    private static final String ALGORITHM = "AES";  // algorithm
-    private static final String KEY_PAIR_ALGORITHM = "RSA"; // KEY PAIR ALGORITHM
+    private final String ALGORITHM = "AES";  // algorithm
+    private final String KEY_PAIR_ALGORITHM = "RSA"; // KEY PAIR ALGORITHM
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private static final String KEY_FORMAT = "RAW"; // What format to return the key in?
-    private static final int GCM_TAG_LENGTH = 16;  // greatest common multiple length
-    private static final int GEN_KEY_SIZE = 256;
-    private static final int GEN_SEC_KEY_SIZE = 2048;
-    /////////////////////////////////////////////////////////////////
-    protected SecretKey secretKey = new SecretKey()
-    {
-        @Override
-        public String getAlgorithm() {
-            return ALGORITHM;
-        }
-        @Override
-        public String getFormat() {
-            return KEY_FORMAT;
-        }
-        @Override // 16 bit encoding aka block sizes must be a multiples of 16
 
-        public byte[] getEncoded() {
-            return new byte[GCM_TAG_LENGTH];
-        }
-    };
+    private final String KEY_FORMAT = "RAW"; // What format to return the key in?
+    private static final int GCM_TAG_LENGTH = 32;  // greatest common multiple length
+    /////////////////////////////////////////////////////////////////
+    protected SecretKey secretKey;
 
     protected String password = null;
 
     private boolean initialized = false;
     /////////////////////////////////////////////////////////////////
-    public Secret() {}
+    public Secret() {secretKey = generateKey(256);}
 
     /**
      * Creates an Secret Object.
@@ -82,11 +66,10 @@ public class Secret implements Serializable {
         try{
 
             log.info("New Raw Secret String: {}", password);
-            if (secretKey != null){
-                initialized = true;
-                log.info(secretKey.toString());
-            }
-            this.password = encrypt(password,  secretKey);
+            secretKey = generateKey(256);
+            log.info(secretKey.toString());
+            initialized = true;
+            this.password =  encrypt(String.valueOf(password),  secretKey);
             log.info("New Encrypted Secret: {}", this.password);
         } catch (Exception e){
             log.error(e.getMessage());
@@ -98,29 +81,29 @@ public class Secret implements Serializable {
      * to inner password field.
      * @param rawPassword the raw password String
      */
-    public Secret setPassword(String rawPassword){
+    public void setPassword(String rawPassword){
         try{
             if (secretKey != null){
                 initialized = true;
                 log.info(secretKey.toString());
             }
             log.info("New Raw Secret String: {}", rawPassword);
-            this.password = encrypt(rawPassword, secretKey);
+            this.password = encrypt(String.valueOf(rawPassword), secretKey);
             log.info("New Encrypted Secret: {}", this.password);
         } catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();
         }
-        return this;
     }
 
     /**
      * Automated method call setSecretKey() will create new random
      * secretKey at runtime or startup.
+     * Key Sizes are: 1024, 2048, 3072, 4096, 8192, etc.
      */
-    protected void setSecretKey() {
+    protected void setSecretKey(Integer key_size) {
         try{
-            secretKey = generateKey(GEN_KEY_SIZE);
+            secretKey = generateKey(key_size);
         }catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();
@@ -518,21 +501,21 @@ public class Secret implements Serializable {
         if (o == this) return true;
         if (!(o instanceof Secret)) return false;
         final Secret other = (Secret) o;
-        if (!other.canEqual((Object) this)) return false;
-        final Object this$secret = this.getPasswordToString();
-        final Object other$secret = other.getPasswordToString();
+        if (!other.canEqual( this)) return false;
+        final String this$secret = this.getPasswordToString();
+        final String other$secret = other.getPasswordToString();
         if (!Objects.equals(this$secret, other$secret)) return false;
         return true;
     }
 
-    protected boolean canEqual(final Object other) {
+    protected boolean canEqual(final Secret other) {
         return other instanceof Secret;
     }
 
     public int hashCode() {
         final int PRIME = 59;
         int result = 1;
-        final Object $secret = this.getPasswordToString();
+        final String $secret = this.getPasswordToString();
         result = result * PRIME + ($secret == null ? 43 : $secret.hashCode());
         return result;
     }
@@ -580,4 +563,52 @@ public class Secret implements Serializable {
         }
     }
 
+    /**
+     * Returns the standard algorithm name for this key. For
+     * example, "DSA" would indicate that this key is a DSA key.
+     * See the <a href=
+     * "{@docRoot}/../specs/security/standard-names.html">
+     * Java Security Standard Algorithm Names</a> document
+     * for more information.
+     *
+     * @return the name of the algorithm associated with this key.
+     */
+    @Override
+    public String getAlgorithm() {
+        return secretKey.getAlgorithm();
+    }
+
+    /**
+     * Returns the name of the primary encoding format of this key,
+     * or null if this key does not support encoding.
+     * The primary encoding format is
+     * named in terms of the appropriate ASN.1 data format, if an
+     * ASN.1 specification for this key exists.
+     * For example, the name of the ASN.1 data format for public
+     * keys is <I>SubjectPublicKeyInfo</I>, as
+     * defined by the X.509 standard; in this case, the returned format is
+     * {@code "X.509"}. Similarly,
+     * the name of the ASN.1 data format for private keys is
+     * <I>PrivateKeyInfo</I>,
+     * as defined by the PKCS #8 standard; in this case, the returned format is
+     * {@code "PKCS#8"}.
+     *
+     * @return the primary encoding format of the key.
+     */
+    @Override
+    public String getFormat() {
+        return secretKey.getFormat();
+    }
+
+    /**
+     * Returns the key in its primary encoding format, or null
+     * if this key does not support encoding.
+     *
+     * @return the encoded key, or null if the key does not support
+     * encoding.
+     */
+    @Override
+    public byte[] getEncoded() {
+        return secretKey.getEncoded();
+    }
 }

@@ -9,7 +9,7 @@ public class Peach implements Fruit<Object> {
     static final long serialVersionUID = -20L;
     private final Fruit.Data<Object> data;
     private Peach(){
-        data = new Data<>("Peach", "3.99", Fruit.Type.SIMPLE);
+        data = new Data<>("Peach", 3.99, Fruit.Type.SIMPLE);
     }
     /**
      * Grows your fruit

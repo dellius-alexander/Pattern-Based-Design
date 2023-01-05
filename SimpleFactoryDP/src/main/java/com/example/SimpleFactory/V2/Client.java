@@ -1,7 +1,6 @@
-package com.example.SimpleFactory;
+package com.example.SimpleFactory.V2;
 
 import com.example.SimpleFactory.IFruit.Fruit;
-import com.example.SimpleFactory.V2.FruitFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,7 +10,7 @@ public class Apple implements Fruit<Object> {
     static final long serialVersionUID = -16L;
     private final Fruit.Data<Object> data;
     private Apple(){
-        data = new Data<>("Apple", "3.99", Fruit.Type.SIMPLE);
+        data = new Data<>("Apple", 3.99, Fruit.Type.SIMPLE);
     }
 
     /**

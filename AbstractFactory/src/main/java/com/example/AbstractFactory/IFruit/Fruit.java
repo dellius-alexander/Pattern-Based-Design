@@ -1,4 +1,4 @@
-package com.example.SimpleFactory.IFruit;
+package com.example.AbstractFactory.IFruit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

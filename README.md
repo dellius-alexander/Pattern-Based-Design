@@ -68,4 +68,56 @@ choosing one of several implementations
   - `Chain of responsibility pattern`: Command objects are handled or passed on to other objects by logic-containing processing objects
   - `Command pattern`: Command objects encapsulate an action and its parameters
 
+###  Alexandrian form (canonical form)
+
+The Alexandrian form is a structured way to define a design pattern.
+
+- Rationale
+  - explanation of steps or rules in the pattern
+- Related patterns
+  - static and dynamic relationship
+- Known use
+  - occurrence of the pattern and its application
+      within existing system
+
+Fields: 
+
+- Name
+  - meaningful name
+- Problem
+  - the statement of the problem
+- Context
+  - a situation giving rise to a problem
+- Forces
+  - a description of relevant forces and constraints
+- Solution
+  - proven solution to the problem
+- Examples
+  - sample applications of the pattern
+- mResulting context (force resolution)
+  - the state of the system after pattern has been applied
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## References
+| #  | URL                                                                                                                           |
+|----|-------------------------------------------------------------------------------------------------------------------------------|
+| 1. | [Visual-Paradigm](https://www.visual-paradigm.com) |
 

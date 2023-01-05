@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FruitFactory implements Serializable {
+    static final long serialVersionUID = -64L; // 0100-0000
     private static final Logger log = LoggerFactory.getLogger(FruitFactory.class);
-    static final long serialVersionUID = -8L;
     private FruitFactory(){}
     static GoldenApple createGoldenApple(){return new GoldenApple();}
     static FujiApple createFujiApple(){return new FujiApple();}

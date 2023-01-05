@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 
 @Slf4j
-public class SimpleFactoryTest {
+public class SimpleAbstractFactoryTest {
     @Test
     void simpleFactoryTest(){
         Fruit<?> peach;

@@ -1,4 +1,4 @@
-package com.example.SimpleFactory.IFruit;
+package com.example.AbstractFactory.IFruit;
 
 /**
  * Base Case Apple Implementation
