@@ -13,5 +13,4 @@ module SimpleFactory {
     exports com.example.SimpleFactory.V2;
     exports com.example.SimpleFactory;
     exports com.example.SimpleFactory.IFruit;
-    exports com.example.SimpleFactory.V3;
 }

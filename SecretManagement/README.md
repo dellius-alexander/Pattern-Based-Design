@@ -33,3 +33,9 @@ by its key.
 
 You can use this `SecretManager` class to store any type of secret, such as 
 passwords, API keys, or sensitive data.
+
+---
+
+### Secret Management UML Diagram
+
+[![Secret Management](./docs/SecretManagement.png)](./docs/SecretManagement.png)

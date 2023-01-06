@@ -3,7 +3,6 @@ package com.example.SecretManagement.Secret;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.security.*;
 
 /**
  * This SecretManager class uses a KeyStore to store secrets securely. The
@@ -23,12 +22,12 @@ import java.security.*;
  * stored in a KeyStore, such as passwords, API keys, or sensitive data.
  * @param <T> generic object parameter
  */
-public class AdvancedSecretManager<T> implements ISecretManager<T>{
-    private static final Logger log = LoggerFactory.getLogger(AdvancedSecretManager.class);
+public class AdvSecretManager<T> implements ISecretManager<T>{
+    private static final Logger log = LoggerFactory.getLogger(AdvSecretManager.class);
     private KeyStore<String, T> keyStore;
     private final char[] keyStorePassword;
 
-    public AdvancedSecretManager(char[] keyStorePassword) {
+    public AdvSecretManager(char[] keyStorePassword) {
         try {
             keyStore = new KeyStore<>(keyStorePassword);
             keyStore.load(null, keyStorePassword);

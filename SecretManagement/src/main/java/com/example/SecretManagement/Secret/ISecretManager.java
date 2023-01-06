@@ -1,7 +1,5 @@
 package com.example.SecretManagement.Secret;
 
-import java.io.Serializable;
-
 /**
  * The SecretManager class stores secrets as key value pair, string key
  * and a generic value. The addSecret method allows you to add a secret

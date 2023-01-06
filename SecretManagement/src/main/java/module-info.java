@@ -11,5 +11,4 @@ module SecretManagement {
     requires lombok;
     requires org.slf4j;
     exports com.example.SecretManagement.Secret;
-    exports com.example.SecretManagement.User;
 }
