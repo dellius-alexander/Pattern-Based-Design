@@ -4,18 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 
 /**
- * The Secrets.class uses AES encryption algorithm to generate a random 256 bit
+ * The Secrets uses AES encryption algorithm to generate a random 256 bit
  * secretKey used to encrypt plaintext string password. The password hash can
  * only be accessed via getter. Both the secretkey and encrypted are needed to
  * decrypt the password back to plaintext.
@@ -39,8 +35,8 @@ import java.util.stream.Collectors;
  * RSA/ECB/OAEPWithSHA-256AndMGF1Padding (1024, 2048) <br/>
  */
 
-public class Secret implements ISecret{
-    static final long serialVersionUID = -64L;
+public class Secret implements ISecret {
+    static final long serialVersionUID = -6603384152749567656L;
     private static final Logger log = LoggerFactory.getLogger(Secret.class);
     /**
      * AES (128)
@@ -51,15 +47,15 @@ public class Secret implements ISecret{
      */
     private final String ALGORITHM = "AES";  // algorithm
 
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-
-    private final String KEY_FORMAT = "RAW"; // What format to return the key in?
-
     private static final int GCM_TAG_LENGTH = 256;  // greatest common multiple length
     /////////////////////////////////////////////////////////////////
-
+    /**
+     * The Binary encoded {@link SecretKey}
+     */
     protected SecretKey secretKey;
-
+    /**
+     * The Base64 encrypted password.
+     */
     protected String password;
 
     private boolean initialized = false;
@@ -71,31 +67,43 @@ public class Secret implements ISecret{
      */
     public Secret(String password) {
         try{
-            log.info("New Raw Secrets String: {}", password);
+            log.info("\nNew Raw Secrets String: {}", password);
             secretKey = generateKey(GCM_TAG_LENGTH);
             log.info(secretKey.toString());
-            initialized = true;
+            setInitialized(true);
             this.password = ISecret.encrypt(password,  secretKey);
-            log.info("New Encrypted Secrets: {}", this.password);
+            log.info("\nNew Encrypted Secrets: {}", this.password);
         } catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();
         }
     }
     /**
-     * Encrypts the raw password String and assigns encrypted value
-     * to inner password field.
-     * @param rawPassword the raw password String
+     * Resets the password currently in use, to a new password.
+     * The oldPassword is required to reset to a new password.
+     *
+     * @param newPassword the new password
+     * @param oldPassword the password currently in use
      */
-    public void setPassword(String rawPassword){
+    @Override
+    public void resetPassword(String newPassword, String oldPassword){
         try{
-            if (secretKey != null){
-                initialized = true;
-                log.info(secretKey.toString());
+            if (secretKey == null){
+                throw new IllegalStateException(
+                        "SecretKey is null. Unable to reset Password.\n" +
+                        "Implying that password has not yet been set."
+                );
             }
-            log.info("New Raw Secrets String: {}", rawPassword);
-            this.password = ISecret.encrypt(rawPassword, secretKey);
-            log.info("New Encrypted Secrets: {}", this.password);
+            // if oldPassword == newPassword
+            if (Objects.equals(oldPassword, ISecret.decrypt(secretKey, password))){
+                password = ISecret.encrypt(newPassword, secretKey);
+            } else {
+                throw new IllegalStateException(
+                        "Password mismatch.\n" +
+                        "Unable to reset password."
+                );
+            }
+            log.info("\nNew Encrypted Secrets: {}", password);
         } catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();
@@ -106,21 +114,26 @@ public class Secret implements ISecret{
      * Returns the SecretKey
      * @return the secret key
      */
+    @Override
     public SecretKey getSecretKey(){return secretKey;}
 
 
+    @Override
     public boolean isInitialized() {
         return this.initialized;
     }
 
+    @Override
     public void setInitialized(boolean initialized) {
         this.initialized = initialized;
     }
 
+    @Override
     public String getPassword() {
         return this.password;
     }
 
+    @Override
     public void setSecretKey(SecretKey secretKey) {
         this.secretKey = secretKey;
     }
@@ -164,12 +177,13 @@ public class Secret implements ISecret{
      * @param algorithm algoritms available include: [ RSA, AES, DES ]
      * @return SecretKey
      */
+    @Override
     public SecretKey generateKey(int size, String algorithm) {
         try {
             KeyGenerator key = KeyGenerator.getInstance(algorithm);
             key.init(size);
-            this.secretKey = key.generateKey();
-            log.info("Secrets Key: {}", this);
+            secretKey = key.generateKey();
+            log.info("\nEncoded Secrets Key: {}", secretKey.getEncoded());
             return this.secretKey;
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException(e.toString());
@@ -203,19 +217,6 @@ public class Secret implements ISecret{
         final String $secret = this.getPasswordToString();
         result = result * PRIME + ($secret == null ? 43 : $secret.hashCode());
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Secrets{\n" +
-                "\"password\":\"" + this.getPasswordToString() + "\",\n" +
-                "\"secretKey\":\"{\n\t" +
-                "\"encoding\":\"" + Arrays.toString(this.getSecretKey().getEncoded()) + "\",\n\t" +
-                "\"format\":\"" + this.getSecretKey().getFormat() + "\",\n\t" +
-                "\"algorithm\":\"" + this.getSecretKey().getAlgorithm() + "\"" +
-                "\n}\",\n" +
-                "\"isInitialized\":\"" + initialized + "\",\n" +
-                "}";
     }
 
     /**
@@ -267,27 +268,18 @@ public class Secret implements ISecret{
         return secretKey.getEncoded();
     }
 
-    public static void main(String[] args)
-    {
-        try {
 
-            Secret password1 = new Secret("LendIT_Book_Kiosk");
-            log.info("-----------------------------------------| New Secrets Object: {}", password1);
-            log.info("-----------------------------------------| Decrypted Plaintext Password1: {}",
-                    ISecret.decrypt(password1.getSecretKey(), password1.getPasswordToString()));
-            log.info("-----------------------------------------| New Encrypted Password1: {}",
-                    password1.getPasswordToString());
-            Secret password2 = new Secret("password");
-            log.info("-----------------------------------------| New Secrets Object: {}", password2);
-            log.info("-----------------------------------------| Decrypted Plaintext Password2: {}",
-                    ISecret.decrypt(password2.getSecretKey(), password2.getPasswordToString()));
-            log.info("-----------------------------------------| New Encrypted Password2: {}",
-                    password2.getPasswordToString());
-        }catch (Exception e){
-            log.error(e.getMessage());
-            log.info(Arrays.stream(e.getStackTrace()).map(
-                    x -> x + "\n"
-            ).collect(Collectors.toList()).toString());
-        }
+    @Override
+    public String toString() {
+        return "Secrets{\n" +
+                "\"password\":\"" + this.getPasswordToString() + "\",\n" +
+                "\"secretKey\":\"{\n\t" +
+                "\"encoding\":\"" + Arrays.toString(this.getSecretKey().getEncoded()) + "\",\n\t" +
+                "\"format\":\"" + this.getSecretKey().getFormat() + "\",\n\t" +
+                "\"algorithm\":\"" + this.getSecretKey().getAlgorithm() + "\"" +
+                "\n}\",\n" +
+                "\"isInitialized\":\"" + initialized + "\",\n" +
+                "}";
     }
+
 }
