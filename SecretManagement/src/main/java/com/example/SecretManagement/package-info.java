@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Secret management is the practice of protecting secrets, such as
+ * Secrets management is the practice of protecting secrets, such as
  * passwords, API keys, and certificates, in a secure and organized
  * manner. It is an important aspect of cybersecurity, as secrets are
  * often used to access sensitive systems and data.

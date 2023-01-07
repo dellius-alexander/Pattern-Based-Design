@@ -1,4 +1,4 @@
-package com.example.SecretManagement.Secret;
+package com.example.SecretManagement.Secrets;
 
 public interface IKeyStore<K, V> {
     /**

@@ -38,4 +38,4 @@ passwords, API keys, or sensitive data.
 
 ### Secret Management UML Diagram
 
-[![Secret Management](./docs/SecretManagement.png)](./docs/SecretManagement.png)
+[![Secret Management](./docs/images/SecretsManagemantPattern.png)](./docs/images/SecretsManagemantPattern.png)

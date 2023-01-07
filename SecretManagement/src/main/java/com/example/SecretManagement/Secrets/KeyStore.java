@@ -1,4 +1,4 @@
-package com.example.SecretManagement.Secret;
+package com.example.SecretManagement.Secrets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +20,11 @@ import java.util.Map;
 public class KeyStore<K, V> implements IKeyStore<K, V> {
     private static final Logger log = LoggerFactory.getLogger(KeyStore.class);
     private final Map<K, V> store;
-    private final char[] password;
+    protected final char[] keyStorePassword;
 
-    public KeyStore(char[] password) {
+    public KeyStore(char[] keyStorePassword) {
         store = new HashMap<>();
-        this.password = password;
+        this.keyStorePassword = keyStorePassword;
     }
 
     /**
@@ -35,10 +35,10 @@ public class KeyStore<K, V> implements IKeyStore<K, V> {
     @Override
     public void load(KeyStore<K, V> keyStore, char[] password){
         try {
-            if (keyStore == null || this.password == null){
+            if (keyStore == null || this.keyStorePassword == null){
                 return; // do nothing
             }
-            else if (keyStore.password == password){
+            else if (keyStore.keyStorePassword == password){
                 store.putAll(keyStore.store);
             }
             else {
@@ -78,7 +78,7 @@ public class KeyStore<K, V> implements IKeyStore<K, V> {
      */
     @Override
     public V get(K key, char[] password) {
-        if (this.password == password){
+        if (this.keyStorePassword == password){
             return store.get(key);
         } else {
             throw new IllegalStateException("Unable to validate keystore password or key is incorrect reference.");

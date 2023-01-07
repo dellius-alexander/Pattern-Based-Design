@@ -1,4 +1,4 @@
-package com.example.SecretManagement.Secret;
+package com.example.SecretManagement.Secrets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * stored in a KeyStore, such as passwords, API keys, or sensitive data.
  * @param <T> generic object parameter
  */
-public class AdvSecretManager<T> implements ISecretManager<T>{
+public class AdvSecretManager<T extends Secret> implements ISecretManager<T>{
     private static final Logger log = LoggerFactory.getLogger(AdvSecretManager.class);
     private KeyStore<String, T> keyStore;
     private final char[] keyStorePassword;

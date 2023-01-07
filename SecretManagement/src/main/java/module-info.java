@@ -1,7 +1,7 @@
 /**
- * This module is about Secret Management.
+ * This module is about Secrets Management.
  * <p>
- * This module provides an example of Secret Management pattern.
+ * This module provides an example of Secrets Management pattern.
  * </p>
  *
  * @since 1.0
@@ -10,5 +10,5 @@
 module SecretManagement {
     requires lombok;
     requires org.slf4j;
-    exports com.example.SecretManagement.Secret;
+    exports com.example.SecretManagement.Secrets;
 }

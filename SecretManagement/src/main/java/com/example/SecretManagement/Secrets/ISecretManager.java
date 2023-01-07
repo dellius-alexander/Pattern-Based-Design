@@ -1,4 +1,4 @@
-package com.example.SecretManagement.Secret;
+package com.example.SecretManagement.Secrets;
 
 /**
  * The SecretManager class stores secrets as key value pair, string key
@@ -24,5 +24,5 @@ public interface ISecretManager<T> {
      * @param key the secret key
      * @return the secret for the given key.
      */
-    T getSecret(String key);
+    T getSecret(String  key);
 }
