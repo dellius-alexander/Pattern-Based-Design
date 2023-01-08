@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TestSecret {
     @Test
-    void CreateSecret(){
+    void createSecret(){
         try {
             String actualPassword = "0123456789";
             Secret password = new Secret(actualPassword);

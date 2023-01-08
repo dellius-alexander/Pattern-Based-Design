@@ -2,6 +2,8 @@ package com.example.SecretManagement.Secrets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,19 +28,30 @@ public class KeyStore<K, V> implements IKeyStore<K, V> {
         store = new HashMap<>();
         this.keyStorePassword = keyStorePassword;
     }
+    public void generateKeyPair(){
+        try {
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+            KeyPair keyPair = kpg.generateKeyPair();
+            log.info(keyPair.getPublic().toString());
+            log.info(keyPair.getPrivate().toString());
+        } catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Load an existing keystore using its associated password.
      * @param keyStore the keystore
-     * @param password the keystore password
+     * @param keyStorePassword the keystore password
      */
     @Override
-    public void load(KeyStore<K, V> keyStore, char[] password){
+    public void load(KeyStore<K, V> keyStore, char[] keyStorePassword){
         try {
             if (keyStore == null || this.keyStorePassword == null){
                 return; // do nothing
             }
-            else if (keyStore.keyStorePassword == password){
+            else if (keyStore.keyStorePassword == keyStorePassword){
                 store.putAll(keyStore.store);
             }
             else {

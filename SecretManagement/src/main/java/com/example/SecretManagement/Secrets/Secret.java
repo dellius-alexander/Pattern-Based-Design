@@ -49,6 +49,8 @@ public class Secret implements ISecret {
 
     private static final int GCM_TAG_LENGTH = 256;  // greatest common multiple length
     /////////////////////////////////////////////////////////////////
+    @Deprecated
+    protected MyProvider provider = new MyProvider();
     /**
      * The Binary encoded {@link SecretKey}
      */
@@ -180,7 +182,7 @@ public class Secret implements ISecret {
     @Override
     public SecretKey generateKey(int size, String algorithm) {
         try {
-            KeyGenerator key = KeyGenerator.getInstance(algorithm);
+            KeyGenerator key = KeyGenerator.getInstance(algorithm, this.provider);
             key.init(size);
             secretKey = key.generateKey();
             log.info("\nEncoded Secrets Key: {}", secretKey.getEncoded());

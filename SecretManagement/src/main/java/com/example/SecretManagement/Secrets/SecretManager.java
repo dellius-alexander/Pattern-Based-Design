@@ -34,7 +34,7 @@ public class SecretManager<T> implements ISecretManager<T> {
     @Override
     public void addSecret(String key, T secret) {
         secrets.put(key, secret);
-        log.info("Added secret for key: {} \n Secret: {}\n", key, secret);
+        log.info("\nAdded secret for key: {} \nSecret: {}\n", key, secrets.get(key));
     }
 
     /**

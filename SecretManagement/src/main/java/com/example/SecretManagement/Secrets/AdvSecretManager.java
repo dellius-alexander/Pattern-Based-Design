@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * stored in a KeyStore, such as passwords, API keys, or sensitive data.
  * @param <T> generic object parameter
  */
-public class AdvSecretManager<T extends Secret> implements ISecretManager<T>{
+public class AdvSecretManager<T> implements ISecretManager<T> {
     private static final Logger log = LoggerFactory.getLogger(AdvSecretManager.class);
     private KeyStore<String, T> keyStore;
     private final char[] keyStorePassword;
@@ -30,7 +30,6 @@ public class AdvSecretManager<T extends Secret> implements ISecretManager<T>{
     public AdvSecretManager(char[] keyStorePassword) {
         try {
             keyStore = new KeyStore<>(keyStorePassword);
-            keyStore.load(null, keyStorePassword);
         } catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();

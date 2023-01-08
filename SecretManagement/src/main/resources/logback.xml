@@ -22,7 +22,7 @@ ERROR 	YES 	  YES 	  YES 	YES 	YES 	  NO
          available to all subsequent configuration elements. -->
     <timestamp key="dateTimeFormat" datePattern="yyyyMMdd'T'HHmm"/>
     <!-- Assign a LOG_DIR property -->
-    <property name="LOG_DIR" value="SecretManagement/data/logs"/>
+    <property name="LOG_DIR" value="data/logs"/>
     <!-- ROLLING FILE APPENDER -->
     <appender
             name="FIX_WINDOW_BASED_FILE"
