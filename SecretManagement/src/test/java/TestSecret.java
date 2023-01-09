@@ -24,7 +24,6 @@ public class TestSecret {
                     password.getPasswordToString());
             Assertions.assertEquals(expectedPassword, actualPassword);
 
-
         }catch (Exception e){
             log.error(e.getMessage());
             log.info(Arrays.stream(e.getStackTrace()).map(

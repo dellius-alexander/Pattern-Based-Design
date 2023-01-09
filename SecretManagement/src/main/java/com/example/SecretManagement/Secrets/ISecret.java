@@ -2,15 +2,12 @@ package com.example.SecretManagement.Secrets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Arrays;
 import java.util.Base64;
-
 
 /**
  * <pre>
@@ -109,10 +106,9 @@ import java.util.Base64;
  *
  * @since 1.1
  */
-public interface ISecret extends Serializable, Key {
+public interface ISecret extends Key {
     long serialVersionUID = -6603384152749567655L;
     Logger log = LoggerFactory.getLogger(ISecret.class);
-    int initialization_vector = 2048;  // greatest common multiple length
     String TRANSFORMATION = "AES/CBC/PKCS5Padding";
 
 
@@ -143,7 +139,7 @@ public interface ISecret extends Serializable, Key {
      * @param secret an encrypted secret object
      * @return true if they match, false if no match found
      */
-    public static boolean matches(String rawPassword, Secret secret){
+    static boolean matches(String rawPassword, Secret secret){
         return rawPassword.equalsIgnoreCase(decrypt(secret.getSecretKey(),
                 secret.getPasswordToString()));
     }
@@ -153,7 +149,7 @@ public interface ISecret extends Serializable, Key {
      * @param password2 an encrypted password string
      * @return true if they match, false if no match found
      */
-    public static boolean matches(String password1, String password2){
+    static boolean matches(String password1, String password2){
         return password1.trim().equalsIgnoreCase(password2.trim());
     }
     /**
@@ -162,7 +158,7 @@ public interface ISecret extends Serializable, Key {
      * @param secret2 an encrypted password Object
      * @return true if they match, false if no match found
      */
-    public static boolean matches(Secret secret1, Secret secret2){
+    static boolean matches(Secret secret1, Secret secret2){
         return decrypt(secret1.getSecretKey(), secret1.getPasswordToString())
                 .equalsIgnoreCase(
                         decrypt(secret2.getSecretKey(), secret2.getPasswordToString())
@@ -177,7 +173,7 @@ public interface ISecret extends Serializable, Key {
      * @param key  {@link Key}
      * @return {@link Cipher}
      */
-    public static byte[] getEncodedCipher(String plaintext, Key key) {
+    private static byte[] getEncodedCipher(String plaintext, Key key) {
         try {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             final int blockSize = cipher.getBlockSize();
@@ -229,7 +225,7 @@ public interface ISecret extends Serializable, Key {
      * @param secretKey {@link SecretKey}
      * @return ciphertext in bytes
      */
-    public static String encrypt(String plaintext, SecretKey secretKey) {
+    static String encrypt(String plaintext, SecretKey secretKey) {
 
         try {
             log.info("Block Size of plaintext: {}",plaintext.getBytes(StandardCharsets.UTF_8).length);
@@ -291,14 +287,14 @@ public interface ISecret extends Serializable, Key {
             throw new IllegalStateException(e.toString());
         }
     }
+
     /**
-     * For decrypting an input string, initialize our cipher using the
-     * DECRYPT_MODE to decrypt the content:
-     * @param cipherText cipherText String
-     * @param privateKey {@link PrivateKey}
-     * @return a decrypted password string
+     * Decodes the cipherText from the given {@linkplain Key}.
+     * @param cipherText the encrypted cipher text
+     * @param key key used to decrypt the cipherText
+     * @return {@link Byte}[]
      */
-    static String decrypt(String cipherText, PrivateKey privateKey) {
+    private static byte[] getDecodedCipher(String cipherText, Key key){
         try {
             byte[] cipherTextBytes = Base64.getDecoder().decode(cipherText);
 //            byte[] cipherTextBytes = cipherText;
@@ -311,8 +307,26 @@ public interface ISecret extends Serializable, Key {
             log.info("InitVector: {}", initVector.length);
             IvParameterSpec ivSpec = new IvParameterSpec(initVector);
             log.info("IvParameterSpec: {}",ivSpec.getIV());
-            cipher.init(Cipher.DECRYPT_MODE, privateKey, ivSpec);
-            byte[] plaintext = cipher.doFinal(cipherTextBytes, blockSize, cipherTextBytes.length - blockSize);
+            cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+            return  cipher.doFinal(cipherTextBytes, blockSize, cipherTextBytes.length - blockSize);
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    /**
+     * For decrypting an input string, initialize our cipher using the
+     * DECRYPT_MODE to decrypt the content:
+     * @param cipherText cipherText String
+     * @param privateKey {@link PrivateKey}
+     * @return a decrypted password string
+     */
+    static String decrypt(String cipherText, PrivateKey privateKey) {
+        try {
+            byte[] plaintext = getDecodedCipher(cipherText, privateKey);
             return new String(plaintext);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -330,25 +344,11 @@ public interface ISecret extends Serializable, Key {
      */
     static String decrypt(SecretKey secretKey, String cipherText) {
         try {
-            byte[] cipherTextBytes = Base64.getDecoder().decode(cipherText);
-//            byte[] cipherTextBytes = cipherText;
-
-            log.info("Cypher text length: {} , Value: {}", cipherTextBytes.length, cipherTextBytes);
-            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            final int blockSize = cipher.getBlockSize();
-            log.info("Block Size: {}",blockSize);
-            byte[] initVector = Arrays.copyOfRange(cipherTextBytes, 0, blockSize);
-            log.info("InitVector: {}", initVector.length);
-            IvParameterSpec ivSpec = new IvParameterSpec(initVector);
-            log.info("IvParameterSpec: {}",ivSpec.getIV());
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
-            byte[] plaintext = cipher.doFinal(cipherTextBytes, blockSize, cipherTextBytes.length - blockSize);
+            byte[] plaintext = getDecodedCipher(cipherText, secretKey);
             return new String(plaintext);
-        } catch (NoSuchPaddingException | InvalidAlgorithmParameterException |
-                 InvalidKeyException | BadPaddingException | IllegalBlockSizeException |  NoSuchAlgorithmException e)
-        {
+        } catch (Exception e) {
             /* None of these exceptions should be possible if precond is met. */
-            throw new IllegalStateException(e.toString());
+            throw new IllegalStateException(e.getMessage());
         }
     }
 
@@ -361,25 +361,11 @@ public interface ISecret extends Serializable, Key {
      */
     static String decrypt(PublicKey publicKey, String cipherText) {
         try {
-            byte[] cipherTextBytes = Base64.getDecoder().decode(cipherText);
-//            byte[] cipherTextBytes = cipherText;
-
-            log.info("Cypher text length: {} , Value: {}", cipherTextBytes.length, cipherTextBytes);
-            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            final int blockSize = cipher.getBlockSize();
-            log.info("Block Size: {}",blockSize);
-            byte[] initVector = Arrays.copyOfRange(cipherTextBytes, 0, blockSize);
-            log.info("InitVector: {}", initVector.length);
-            IvParameterSpec ivSpec = new IvParameterSpec(initVector);
-            log.info("IvParameterSpec: {}",ivSpec.getIV());
-            cipher.init(Cipher.DECRYPT_MODE, publicKey, ivSpec);
-            byte[] plaintext = cipher.doFinal(cipherTextBytes, blockSize, cipherTextBytes.length - blockSize);
+            byte[] plaintext = getDecodedCipher(cipherText, publicKey);
             return new String(plaintext);
-        } catch (NoSuchPaddingException | InvalidAlgorithmParameterException |
-                 InvalidKeyException | BadPaddingException | IllegalBlockSizeException |  NoSuchAlgorithmException e)
-        {
+        } catch (Exception e) {
             /* None of these exceptions should be possible if precond is met. */
-            throw new IllegalStateException(e.toString());
+            throw new IllegalStateException(e.getMessage());
         }
     }
 

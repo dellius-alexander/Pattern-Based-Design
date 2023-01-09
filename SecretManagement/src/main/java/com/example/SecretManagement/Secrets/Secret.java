@@ -1,13 +1,12 @@
 package com.example.SecretManagement.Secrets;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
-import java.security.*;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 /**
@@ -38,19 +37,11 @@ import java.util.stream.Collectors;
 public class Secret implements ISecret {
     static final long serialVersionUID = -6603384152749567656L;
     private static final Logger log = LoggerFactory.getLogger(Secret.class);
-    /**
-     * AES (128)
-     * DES (56)
-     * DESede (168)
-     * HmacSHA1
-     * HmacSHA256
-     */
-    private final String ALGORITHM = "AES";  // algorithm
 
-    private static final int GCM_TAG_LENGTH = 256;  // greatest common multiple length
+    private static final int KEY_SIZE = 256;  // greatest common multiple length
     /////////////////////////////////////////////////////////////////
-    @Deprecated
-    protected MyProvider provider = new MyProvider();
+//    @Deprecated
+//    protected MyProvider provider = new MyProvider();
     /**
      * The Binary encoded {@link SecretKey}
      */
@@ -69,8 +60,9 @@ public class Secret implements ISecret {
      */
     public Secret(String password) {
         try{
+
             log.info("\nNew Raw Secrets String: {}", password);
-            secretKey = generateKey(GCM_TAG_LENGTH);
+            secretKey = generateKey(KEY_SIZE, "AES");
             log.info(secretKey.toString());
             setInitialized(true);
             this.password = ISecret.encrypt(password,  secretKey);
@@ -96,8 +88,9 @@ public class Secret implements ISecret {
                         "Implying that password has not yet been set."
                 );
             }
-            // if oldPassword == newPassword
+            // if oldPassword == currentPassword
             if (Objects.equals(oldPassword, ISecret.decrypt(secretKey, password))){
+                // change currentPassword to newPassword
                 password = ISecret.encrypt(newPassword, secretKey);
             } else {
                 throw new IllegalStateException(
@@ -154,12 +147,25 @@ public class Secret implements ISecret {
      * DESede (168)
      * HmacSHA1
      * HmacSHA256
+     *
+     * Default: Algorithm = AES
      * @param size number of bits [128, 192, 256]
      * @return SecretKey
      */
     public SecretKey generateKey(int size) {
         try {
-            return generateKey(size, ALGORITHM);
+            /**
+             * AES (128)
+             * DES (56)
+             * DESede (168)
+             * HmacSHA1
+             * HmacSHA256
+             */
+            // algorithm
+            String algorithm = "AES";
+            SecretKey secretKey = ISecret.createSecretKey(algorithm, size);
+            log.info("\nEncoded Secrets Key: {}", secretKey.getEncoded());
+            return secretKey;
         } catch (Exception e){
             log.error(e.getMessage());
             e.printStackTrace();
@@ -182,14 +188,14 @@ public class Secret implements ISecret {
     @Override
     public SecretKey generateKey(int size, String algorithm) {
         try {
-            KeyGenerator key = KeyGenerator.getInstance(algorithm, this.provider);
-            key.init(size);
-            secretKey = key.generateKey();
+            SecretKey secretKey = ISecret.createSecretKey(algorithm, size);
             log.info("\nEncoded Secrets Key: {}", secretKey.getEncoded());
-            return this.secretKey;
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e.toString());
+            return secretKey;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -283,5 +289,28 @@ public class Secret implements ISecret {
                 "\"isInitialized\":\"" + initialized + "\",\n" +
                 "}";
     }
+
+//    public static void main(String[] args) {
+//        try {
+//            String actualPassword = "0123456789";
+//            Secret password = new Secret(actualPassword);
+//            String expectedPassword = ISecret.decrypt(password.getSecretKey(), password.getPasswordToString());
+//            log.info("\n|-----------------------------------------| " +
+//                    "\nNew Encrypted Base64 Password: {}", password);
+//            log.info("\n|-----------------------------------------| " +
+//                    "\nDecrypted Plaintext Password: {}", expectedPassword);
+//            log.info("\n|-----------------------------------------| " +
+//                            "\nNew Encrypted Password String: {}",
+//                    password.getPasswordToString());
+//            assert expectedPassword.equals(actualPassword);
+//
+//
+//        }catch (Exception e){
+//            log.error(e.getMessage());
+//            log.info(Arrays.stream(e.getStackTrace()).map(
+//                    x -> x + "\n"
+//            ).collect(Collectors.toList()).toString());
+//        }
+//    }
 
 }

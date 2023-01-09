@@ -26,7 +26,7 @@ managed in a secure and controlled manner, and that they are only accessed by au
 parties. This can help to reduce the risk of secrets being compromised and can help 
 protect the security and integrity of your systems.
 
-This `SecretManager` class stores secrets in a `HashMap` with a string key and a 
+This `SecretManager` class stores secrets in a `KeyStore` with a generic key and a 
 generic value. The `addSecret` method allows you to add a secret to the 
 SecretManager, and the `getSecret` method allows you to retrieve a secret 
 by its key.
@@ -38,4 +38,4 @@ passwords, API keys, or sensitive data.
 
 ### Secret Management UML Diagram
 
-[![Secret Management](./docs/images/SecretsManagemantPattern.png)](./docs/images/SecretsManagemantPattern.png)
+[![Secret Management](./docs/images/SecretManagement.jpg)](./docs/images/SecretManagement.jpg)

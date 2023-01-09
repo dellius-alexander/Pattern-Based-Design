@@ -3,38 +3,54 @@ package com.example.SecretManagement.Secrets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 
 /**
- * The SecretManager class stores secrets as key/value pair, string key
- * and a generic value. The addSecret method allows you to add a secret
- * to the SecretManager, and the getSecret method allows you
- * to retrieve a secret from the secret store by using its key. You can
- * use the ISecretManager class to implement a SecretManager and store
- * any type of secret, such as passwords, API keys, or sensitive data.
+ * This SecretManager class uses a KeyStore to store secrets securely. The
+ * KeyStore is a Java utility that provides a secure way to store cryptographic keys.
  *
- * @param <T> A generic secret object of any type
+ * The SecretManager constructor takes a key store password and creates a
+ * new KeyStore instance using the default type. The addSecret method adds
+ * a secret to the KeyStore using the given alias/key. The getSecret method
+ * retrieves a secret from the KeyStore using the given alias/key.
+ *
+ * This implementation is more secure than the previous implementation because
+ * it uses the KeyStore to store secrets in an encrypted form. However, it is
+ * also more complex and requires additional dependencies (such as the Java
+ * Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files).
+ *
+ * You can use this SecretManager class to store any type of secret that can be
+ * stored in a KeyStore, such as passwords, API keys, or sensitive data.
+ * @param <T> generic object parameter
  */
 public class SecretManager<T> implements ISecretManager<T> {
-
-    private final HashMap<String, T> secrets;
     private static final Logger log = LoggerFactory.getLogger(SecretManager.class);
+    private KeyStore<String, T> keyStore;
+    private final char[] keyStorePassword;
 
-    public SecretManager() {
-        secrets = new HashMap<>();
-        log.info("Secret Manager initialized...");
+    public SecretManager(char[] keyStorePassword) {
+        try {
+            keyStore = new KeyStore<>(keyStorePassword);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        this.keyStorePassword = keyStorePassword;
     }
 
     /**
      * Add secret to secret store.
      *
      * @param key    the secret key
-     * @param secret the sensitive object to be hashed and kept secret.
+     * @param secret the sensitive object to be hashed.
      */
     @Override
     public void addSecret(String key, T secret) {
-        secrets.put(key, secret);
-        log.info("\nAdded secret for key: {} \nSecret: {}\n", key, secrets.get(key));
+        try {
+            keyStore.put(key,  secret);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -45,7 +61,12 @@ public class SecretManager<T> implements ISecretManager<T> {
      */
     @Override
     public T getSecret(String key) {
-        log.info("Retrieving secret for key: {}", key);
-        return secrets.get(key);
+        try {
+            return keyStore.get(key, this.keyStorePassword);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }
